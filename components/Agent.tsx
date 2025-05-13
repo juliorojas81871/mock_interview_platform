@@ -90,6 +90,7 @@ const Agent = ({ userName, userId, type, interviewId, feedbackId, questions }: A
             }
           }
     }, [messages, callStatus, userId, type, feedbackId, interviewId, router]);
+
     const handleCall = async () => {
         setCallStatus(CallStatus.CONNECTING);
         if (type === "generate") {
@@ -98,6 +99,8 @@ const Agent = ({ userName, userId, type, interviewId, feedbackId, questions }: A
                     username: userName,
                     userid: userId,
                 },
+                clientMessages: undefined as unknown as object[][],
+                serverMessages: undefined as unknown as object[][],
             });
         } else {
             let formattedQuestions = "";
@@ -108,13 +111,15 @@ const Agent = ({ userName, userId, type, interviewId, feedbackId, questions }: A
             }
 
             await vapi.start(interviewer, {
-              variableValues: {
-                questions: formattedQuestions,
-              },
+                variableValues: {
+                  questions: formattedQuestions,
+                },
+                clientMessages: undefined as unknown as object[][],
+                serverMessages: undefined as unknown as object[][],
             });
           }
     }
-    
+
     const handleDisconnect = () => {
         setCallStatus(CallStatus.FINISHED);
         vapi.stop();
