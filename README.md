@@ -1,4 +1,4 @@
-# AI Agent
+# Mock Interview Platform
 
 ## Description
 
